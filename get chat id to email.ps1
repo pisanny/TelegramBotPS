@@ -1,3 +1,13 @@
+<# 
+ 
+.DESCRIPTION 
+    Get chat ID to e-mail
+ 
+.NOTES 
+    Author: Vladimir Pisanny
+    Last Updated: 10/25/2018   
+#> 
+
 $proxy ="http://"
 $smtp = "srv"
 $Credential = Get-Credential
