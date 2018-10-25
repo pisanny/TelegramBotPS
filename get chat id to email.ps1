@@ -32,7 +32,7 @@ $message | %{If($_.text -match "reg") {
 
     If( !([string]::IsNullOrWhiteSpace($user))) {
          $Body = 'Hi ' + $_.first_name + ', yor Chat ID: ' + $_.chat_id + '.'
-         Send-MailMessage -Credential $Credential -To $user.mail -From "VelcomAlertBot@velcom.by" -SmtpServer $smtp -Subject "Chat ID" -Body $Body
+         Send-MailMessage -Credential $Credential -To $user.mail -From "email@domen.by" -SmtpServer $smtp -Subject "Chat ID" -Body $Body
         }
    }
 }
