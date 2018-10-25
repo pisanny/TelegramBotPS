@@ -41,7 +41,7 @@ $message | %{If($_.text -match "reg") {
     $email = [regex]::MAtch($_.text, $re, "IgnoreCase ").Value
     $user = try{Get-ADUser -Filter {mail -eq $email} -Properties mail} Catch {$null}
 
-    If( !([string]::IsNullOrWhiteSpace($user))) {
+    If($user) {
          $Body = 'Hi ' + $_.first_name + ', yor Chat ID: ' + $_.chat_id + '.'
          Send-MailMessage -Credential $Credential -To $user.mail -From $sysemail -SmtpServer $smtp -Subject "Chat ID" -Body $Body
         }
