@@ -127,7 +127,6 @@ $SqlConnection = New-Object System.Data.SqlClient.SqlConnection
 $SqlConnection.ConnectionString = "Server=$SqlServer; Database=$SqlDB; Integrated Security=True"
 $SqlConnection.Open()
 
-#$Credentials = New-Object Microsoft.Exchange.WebServices.Data.WebCredentials("svcAlert","fElgj3BeIg2bBPr1DPOW1JU7","velcom")
 $Credentials = New-Object Microsoft.Exchange.WebServices.Data.WebCredentials($credman.UserName,$credman.CredentialBlob,$domain)
 $exchService = New-Object Microsoft.Exchange.WebServices.Data.ExchangeService
 $exchService.Credentials = $Credentials
@@ -140,7 +139,6 @@ $Items = $Inbox.FindItems(100) | ? Subject -Match "Chat ID"
 
 foreach ($Item in $Items)
     {
-     #$Item.Sender.Address
      $SID = "'" + (Get-ADUser -Filter {mail -eq $Item.Sender.Address}).SID + "'"
      $SqlCmd = $SqlConnection.CreateCommand()
      $SqlCmd.CommandText = "SELECT CAST(CASE WHEN EXISTS(SELECT * FROM chatusers where [SID] = $SID AND [Registered] = 0) THEN 1 ELSE 0 END AS BIT)"
@@ -158,9 +156,6 @@ foreach ($Item in $Items)
            Send-MailMessage -Credential $Credential -Port 587 -To $Item.Sender.Address -From $sysemail -SmtpServer $smtp -Subject "Chat ID" -Body $Body
       }
       $Item.Delete([Microsoft.Exchange.WebServices.Data.DeleteMode]::HardDelete, $true)
-      #$Item.Subject
-      #$Item.load($psPropertySet)
-      #$Item.BodyText
     }
 
 $SqlConnection.close()
