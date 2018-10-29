@@ -109,13 +109,12 @@ function Read-Creds
 }
 
 
-$SqlServer = "srv-sma-001.main.velcom.by"
-$SqlDB = "integrator"
+$SqlServer = "SQL server"
+$SqlDB = "db"
 
-$domain = "velcom"
-$sysemail = "VelcomAlertBot@velcom.by"
-$smtp = "srv-exch-04.main.velcom.by"
-$sysemail = "VelcomAlertBot@velcom.by"
+$domain = "domain"
+$sysemail = "AlertBot@domain.by"
+$smtp = "mail server"
 $credman = Read-Creds -Target 'http://server'
 $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $credman.UserName, (ConvertTo-SecureString -String $credman.CredentialBlob -AsPlainText -Force)
 
