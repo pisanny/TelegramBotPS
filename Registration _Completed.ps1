@@ -8,9 +8,6 @@
     Last Updated: 10/29/2018   
 #> 
 
-
-# The functions Get-CredType and Read-Creds are taken from the script CredMan.ps1, ator Jim Harrison (jim@isatools.org).
-
 $CredManPath = ".\CredMan.ps1"
 $Target = 'http://server'
 $CredManScript = [Scriptblock]::Create((Get-Content $CredManPath -Raw) + "Read-Creds -Target $Target")
