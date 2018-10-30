@@ -132,8 +132,6 @@ $exchService = New-Object Microsoft.Exchange.WebServices.Data.ExchangeService
 $exchService.Credentials = $Credentials
 $exchService.AutodiscoverUrl($sysemail)
 $Inbox = [Microsoft.Exchange.WebServices.Data.Folder]::Bind($exchservice,[Microsoft.Exchange.WebServices.Data.WellKnownFolderName]::Inbox)
-$psPropertySet = new-object Microsoft.Exchange.WebServices.Data.PropertySet([Microsoft.Exchange.WebServices.Data.BasePropertySet]::FirstClassProperties)
-$psPropertySet.RequestedBodyType = [Microsoft.Exchange.WebServices.Data.BodyType]::Text
 
 $Items = $Inbox.FindItems(100) | ? Subject -Match "Chat ID"
 
