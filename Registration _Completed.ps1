@@ -10,9 +10,6 @@
 
 $CredManPath = ".\CredMan.ps1"
 $Target = 'http://server'
-$CredManScript = [Scriptblock]::Create((Get-Content $CredManPath -Raw) + "Read-Creds -Target $Target")
-$credman = &$CredManScript
-$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $credman.UserName, (ConvertTo-SecureString -String $credman.CredentialBlob -AsPlainText -Force)
 
 $SqlServer = "SQL server"
 $SqlDB = "db"
@@ -21,6 +18,9 @@ $domain = "domain"
 $sysemail = "AlertBot@domain.by"
 $smtp = "mail server"
 
+$CredManScript = [Scriptblock]::Create((Get-Content $CredManPath -Raw) + "Read-Creds -Target $Target")
+$credman = &$CredManScript
+$Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $credman.UserName, (ConvertTo-SecureString -String $credman.CredentialBlob -AsPlainText -Force)
 
 # Microsoft Exchange Web Services Managed API 2.2
 
@@ -30,6 +30,7 @@ Import-Module ActiveDirectory
 $SqlConnection = New-Object System.Data.SqlClient.SqlConnection
 $SqlConnection.ConnectionString = "Server=$SqlServer; Database=$SqlDB; Integrated Security=True"
 $SqlConnection.Open()
+$SqlCmd = $SqlConnection.CreateCommand()
 
 $Credentials = New-Object Microsoft.Exchange.WebServices.Data.WebCredentials($credman.UserName,$credman.CredentialBlob,$domain)
 $exchService = New-Object Microsoft.Exchange.WebServices.Data.ExchangeService
@@ -42,7 +43,6 @@ $Items = $Inbox.FindItems(100) | ? Subject -Match "Chat ID"
 foreach ($Item in $Items)
     {
      $SID = "'" + (Get-ADUser -Filter {mail -eq $Item.Sender.Address}).SID + "'"
-     $SqlCmd = $SqlConnection.CreateCommand()
      $SqlCmd.CommandText = "SELECT CAST(CASE WHEN EXISTS(SELECT * FROM chatusers where [SID] = $SID AND [Registered] = 0) THEN 1 ELSE 0 END AS BIT)"
      $Reader = $SqlCmd.ExecuteReader()
      $table = new-object "System.Data.DataTable"
@@ -51,7 +51,6 @@ foreach ($Item in $Items)
      [bool]$queryResult = $($table.Rows[0])[0]
      if ($queryResult) {
            $SqlStr = "UPDATE chatusers SET [Registered] = '1' WHERE [SID] = $SID"
-           $SqlCmd = $SqlConnection.CreateCommand()
            $SqlCmd.CommandText = $SqlStr
            $SqlCmd.ExecuteNonQuery() | Out-Null
            $Body = 'Hi ' + $Item.Sender.Name + '. Registration successfully completed.'
