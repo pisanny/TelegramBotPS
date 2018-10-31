@@ -1,12 +1,12 @@
 # PowerShell Scripts
 
-Get_ChatId_To_Email.ps1 - Получить ChatId Telegram по корпоративной почте с проверкой.
+- Get_ChatId_To_Email.ps1 - Получить ChatId Telegram по корпоративной почте с проверкой.
 
-Request_registration.ps1 - Запрос регистации на канал Telegram.
+- Request_registration.ps1 - Запрос регистации на канал Telegram.
 
-Registration _Completed.ps1 - Окончание регистрациии.
+- Registration _Completed.ps1 - Окончание регистрациии.
 
-Command_handler.ps1 - Обработчик команд для чата.
+- Command_handler.ps1 - Обработчик команд для чата.
 
 Для Request_registration.ps1, Registration _Completed.ps1 и Command_handler.ps1 используется таблицы:
 
