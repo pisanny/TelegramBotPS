@@ -31,7 +31,14 @@ If( $aduser)
          $SqlCmd.ExecuteNonQuery() | Out-Null
          $Body = 'Hi ' + $aduser.Name + ', yor Chat ID: ' + $message.chat_id + '. Reply to the email to complete the registration please.'
          Send-MailMessage -Credential $Credential -Port 587 -To $aduser.mail -From $sysemail -SmtpServer $smtp -Subject "Chat ID" -Body $Body
-         $script:result = $Body
+         $script:result = @{
+                            UpdateId = $message.UpdateId
+                            text = $Body
+                            chat_id = $message.chat_id
+                            Message_ID = $message.Message_ID
+                            first_name = $message.first_name
+                            last_name  = $message.last_name
+                           }
         }
         Else
             {
