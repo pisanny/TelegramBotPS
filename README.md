@@ -41,3 +41,5 @@
 
 [CredMan.ps1]: https://gallery.technet.microsoft.com/scriptcenter/PowerShell-Credentials-d44c3cde
 [Microsoft Exchange Web Services Managed API 2.2]: http://techgenix.com/microsoft-exchange-web-services-managed-api-22-released/
+
+- reg.ps1 - Реализация команды get, содержиться в таблице scripts.
