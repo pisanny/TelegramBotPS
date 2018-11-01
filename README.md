@@ -8,7 +8,7 @@
 
 - Command_handler.ps1 - Обработчик команд для чата.
 
-Для Request_registration.ps1, Registration _Completed.ps1 и Command_handler.ps1 используется таблицы:
+Для Request_registration.ps1, Registration _Completed.ps1, Message_handler.ps1 и Command_handler.ps1 используется таблицы:
 
 ### chatusers
 
@@ -43,3 +43,4 @@
 [Microsoft Exchange Web Services Managed API 2.2]: http://techgenix.com/microsoft-exchange-web-services-managed-api-22-released/
 
 - reg.ps1 - Реализация команды get, содержиться в таблице scripts.
+- Message_handler.ps1 - Обрабатывает сообщения в системном почтовом ящике. Обрабатывает письма с регистрационной информацией (аналог Registration _Completed.ps1) и обрабатывает письма с алертами системы мониторинга. Письма с алертами шлются на почтовую группу поддержки сервиса, в ту же группу включен почтовый адрес чат бота.
